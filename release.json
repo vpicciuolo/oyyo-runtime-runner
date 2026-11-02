@@ -1,10 +1,10 @@
 {
-  "version": "0.1.4",
+  "version": "0.1.7",
   "platform": "windows-x64",
   "format": "OYYOPKG1",
   "encryption": "AES-256-GCM",
-  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.4/oyyo-windows-demo-0.1.4.oyyo",
-  "sha256": "f4417aea4523719d3251ff1cd37845f85feec198bb10c54d9d4a12e1e229069e",
-  "sizeBytes": 52238882,
-  "notes": "Faster balanced responses, larger final-answer budgets, Text / code view, Markdown downloads, visible version and an advanced code-protected Codex assistance mode with explicit provider disclosure."
+  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.7/oyyo-windows-demo-0.1.7.oyyo",
+  "sha256": "d3410a445e0f7bafbb88319a1963df181ba0b93161985049e71fbc5cf826e483",
+  "sizeBytes": 51354776,
+  "notes": "Adds persistent workspaces with nested chats and shared saved memory, new/clear chat controls, a compact collapsible sidebar, corrected logo sizing, Activity requests, Markdown export, request-based model routing and automatic preparation targeting three qualified compatible local models. Existing installation flow and demo key are unchanged."
 }
