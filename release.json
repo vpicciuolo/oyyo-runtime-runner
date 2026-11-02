@@ -1,10 +1,10 @@
 {
-  "version": "0.1.9",
+  "version": "0.1.10",
   "platform": "windows-x64",
   "format": "OYYOPKG1",
   "encryption": "AES-256-GCM",
-  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.9/oyyo-windows-demo-0.1.9.oyyo",
-  "sha256": "c91614d050a70d2bfd041b685ded2835c901cccef11c10f8658b3816518dae04",
-  "sizeBytes": 51355961,
-  "notes": "Includes first-install-only activation, keyless updates, safe registration replacement, reliable Codex-owned runtime startup, stale launcher handoff, and lightweight startup health checks. Model integrity checks are shared across simultaneous requests. Installation link and demo key remain unchanged."
+  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.10/oyyo-windows-demo-0.1.10.oyyo",
+  "sha256": "2049a53846898dce2af62d92224554d986cd33a923b0302b5fc6cffd6ddd28b5",
+  "sizeBytes": 51356118,
+  "notes": "Adds an Advanced setting for the Codex sessions menu, disabled by default. Corrects the Windows PowerShell update environment and process launch. Includes saved activation for updates without key entry, startup and registration fixes, and the INTERNAL BETA ACTIVATED label. The demo key and GitHub installation link are unchanged."
 }

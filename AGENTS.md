@@ -9,3 +9,7 @@ Check the Windows PowerShell execution policy first. If it blocks the reviewed i
 Never read, echo or save the demo key in a chat, tool argument, source file, log, command-line argument or GitHub issue. Let the user type it directly into the masked dialog. Do not infer a key, bypass the gate, modify expected hashes, or extract unauthenticated data. An invalid key must stop installation.
 
 After installation, verify its outcome and the branded Desktop and Start menu shortcuts. Do not claim that all model capabilities, enterprise features, speech packs or media generation are installed or verified. Reuse an existing installation rather than asking the user to choose another folder.
+
+When launching Windows PowerShell from PowerShell 7 or an agent process, give only that child the Windows PowerShell module path (`%SystemRoot%\System32\WindowsPowerShell\v1.0\Modules`); do not let it inherit PowerShell 7 modules, and do not change system settings. This avoids duplicate extended-type startup errors.
+
+The key is entered only on first installation. After successful activation the installer saves a Windows-protected activation in the data folder; updates reuse it without displaying a key dialog. For an existing installation, run the installer with `-Update -CurrentInstallDirectory <existing installation root>` so its existing data and activation are preserved. Do not perform a fresh installation over an existing activated app.
