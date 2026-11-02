@@ -1,10 +1,10 @@
 {
-  "version": "0.1.8",
+  "version": "0.1.9",
   "platform": "windows-x64",
   "format": "OYYOPKG1",
   "encryption": "AES-256-GCM",
-  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.8/oyyo-windows-demo-0.1.8.oyyo",
-  "sha256": "d32e22d3b63426a7304935546f229792fa6daad4cf4dbb49647456f1a03a42db",
-  "sizeBytes": 51355504,
-  "notes": "Fixes update activation: the demo key is required only on first installation and is protected by Windows for later updates. Adds headless update startup diagnostics, duplicate-launch protection, and safe replacement of the existing OYYO registration with rollback on failure. The installation link and demo key are unchanged."
+  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.9/oyyo-windows-demo-0.1.9.oyyo",
+  "sha256": "c91614d050a70d2bfd041b685ded2835c901cccef11c10f8658b3816518dae04",
+  "sizeBytes": 51355961,
+  "notes": "Includes first-install-only activation, keyless updates, safe registration replacement, reliable Codex-owned runtime startup, stale launcher handoff, and lightweight startup health checks. Model integrity checks are shared across simultaneous requests. Installation link and demo key remain unchanged."
 }
