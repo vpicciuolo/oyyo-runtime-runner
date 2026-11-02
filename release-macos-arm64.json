@@ -3,10 +3,12 @@
   "platform": "macos-arm64",
   "format": "OYYOPKG1",
   "encryption": "AES-256-GCM",
-  "payloadArchive": "tar.gz",
-  "status": "awaiting-production-encryption",
   "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.10/oyyo-macos-arm64-demo-0.1.10.oyyo",
-  "sha256": null,
-  "sizeBytes": 0,
-  "notes": "Placeholder only. The Windows release owner will set status to ready and add the exact encrypted production asset SHA-256 and byte count after reviewing the private plaintext Mac artifact."
+  "sha256": "7ac7587c74ef4808d80661266bc9e0a47084d63eda57af44b939d6b89028ed7d",
+  "sizeBytes": 216548907,
+  "status": "ready",
+  "payloadArchive": "tar.gz",
+  "minimumMacOS": "14.0",
+  "baseVersion": "0.1.10",
+  "notes": "Native macOS build of OYYO 0.1.10. Same demo key; first installation only. Updates reuse local Keychain activation."
 }
