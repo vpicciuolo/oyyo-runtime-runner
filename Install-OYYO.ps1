@@ -1,4 +1,4 @@
-param([string]$InstallDir=(Join-Path $env:LOCALAPPDATA 'OYYO\runtime'),[switch]$Preview)
+param([string]$InstallDir=(Join-Path $env:LOCALAPPDATA 'OYYO\runtime'),[switch]$Preview,[switch]$Update,[string]$CurrentInstallDirectory)
 $ErrorActionPreference='Stop'
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
@@ -12,23 +12,33 @@ $NodeCommand=Get-Command node -ErrorAction SilentlyContinue
 $NodeBin=if($NodeCommand){$NodeCommand.Source}else{Join-Path $env:USERPROFILE '.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe'}
 if(-not(Test-Path -LiteralPath $NodeBin)){throw 'Install and open Codex first. OYYO needs its local Node runtime or Node.js 22 or later.'}
 $NodeMajor=[int]((& $NodeBin --version).TrimStart('v').Split('.')[0]);if($NodeMajor -lt 22){throw 'Node.js 22 or later is required.'}
+$PreviousConfig=$null
+if($Update){
+ if(-not $CurrentInstallDirectory){throw 'The current OYYO installation was not identified.'}
+ $ConfigPath=Join-Path $CurrentInstallDirectory 'plugins\oyyo\config.local.json'
+ if(-not(Test-Path -LiteralPath $ConfigPath)){throw 'The current OYYO settings were not found. Update stopped to protect your data.'}
+ $PreviousConfig=Get-Content -LiteralPath $ConfigPath -Raw | ConvertFrom-Json
+ if(-not $PreviousConfig.dataDir){throw 'The existing OYYO data directory is missing from its settings.'}
+ if($Manifest.version -notmatch '^\d+\.\d+\.\d+$'){throw 'Invalid update version.'}
+ $InstallDir=Join-Path $env:LOCALAPPDATA ('OYYO\versions\'+$Manifest.version+'-'+[Guid]::NewGuid().ToString('N').Substring(0,8))
+}
 $Existing=Join-Path $InstallDir 'Install-OYYO.ps1'
 if((Test-Path -LiteralPath $Existing) -and -not $Preview){Start-Process -FilePath (Join-Path ([Environment]::GetFolderPath('Desktop')) 'OYYO.lnk');return}
 $Url=[uri]$Manifest.url
 if($Url.Scheme -ne 'https' -or $Url.Host -ne 'github.com' -or -not $Url.AbsolutePath.StartsWith('/vpicciuolo/oyyo-runtime-runner/releases/download/')){throw 'Unexpected package source.'}
 $Form=New-Object Windows.Forms.Form
-$Form.Text=if($Preview){'OYYO installer preview'}else{'Install OYYO'}
+$Form.Text=if($Preview){'OYYO installer preview'}elseif($Update){'Update OYYO'}else{'Install OYYO'}
 $Form.ClientSize=New-Object Drawing.Size(520,365)
 $Form.StartPosition='CenterScreen';$Form.FormBorderStyle='FixedDialog';$Form.MaximizeBox=$false;$Form.MinimizeBox=$false
 $Form.BackColor=[Drawing.Color]::FromArgb(25,28,32);$Form.ForeColor=[Drawing.Color]::White
 $Form.Font=New-Object Drawing.Font('Segoe UI',10)
 $IconFile=Join-Path $PSScriptRoot 'oyyo.ico';if(Test-Path -LiteralPath $IconFile){$Form.Icon=New-Object Drawing.Icon($IconFile)}
 $Title=New-Object Windows.Forms.Label;$Title.Text='Your OYYO workspace, ready in a few steps.';$Title.Location=New-Object Drawing.Point(24,22);$Title.Size=New-Object Drawing.Size(470,48);$Title.Font=New-Object Drawing.Font('Segoe UI',16);$Form.Controls.Add($Title)
-$Hint=New-Object Windows.Forms.Label;$Hint.Text='Enter your demo key. OYYO will handle the installation and add your Desktop and Start menu shortcuts.';$Hint.Location=New-Object Drawing.Point(24,82);$Hint.Size=New-Object Drawing.Size(470,46);$Form.Controls.Add($Hint)
+$Hint=New-Object Windows.Forms.Label;$Hint.Text=if($Update){'Enter your demo key to update. Your models, chats, memory and settings will stay in their existing data folder.'}else{'Enter your demo key. OYYO handles the installation and adds Desktop and Start menu shortcuts.'};$Hint.Location=New-Object Drawing.Point(24,82);$Hint.Size=New-Object Drawing.Size(470,46);$Form.Controls.Add($Hint)
 $KeyBox=New-Object Windows.Forms.TextBox;$KeyBox.UseSystemPasswordChar=$true;$KeyBox.MaxLength=64;$KeyBox.Location=New-Object Drawing.Point(24,140);$KeyBox.Size=New-Object Drawing.Size(470,30);$KeyBox.AccessibleName='OYYO demo key';$Form.Controls.Add($KeyBox)
 $Privacy=New-Object Windows.Forms.Label;$Privacy.Text='64 characters. Your key stays on this computer and is not sent to GitHub.';$Privacy.Location=New-Object Drawing.Point(24,178);$Privacy.Size=New-Object Drawing.Size(470,35);$Privacy.ForeColor=[Drawing.Color]::Silver;$Form.Controls.Add($Privacy)
 $Consent=New-Object Windows.Forms.CheckBox;$Consent.Text='Allow an OYYO-only script exception for the shortcuts. No system-wide security setting changes.';$Consent.Location=New-Object Drawing.Point(24,220);$Consent.Size=New-Object Drawing.Size(470,48);$Consent.Checked=$false;$Form.Controls.Add($Consent)
-$Install=New-Object Windows.Forms.Button;$Install.Text=if($Preview){'Preview only'}else{'Install OYYO'};$Install.Location=New-Object Drawing.Point(330,292);$Install.Size=New-Object Drawing.Size(164,44);$Install.Enabled=$false;$Install.DialogResult='OK';$Form.Controls.Add($Install)
+$Install=New-Object Windows.Forms.Button;$Install.Text=if($Preview){'Preview only'}elseif($Update){'Update OYYO'}else{'Install OYYO'};$Install.Location=New-Object Drawing.Point(330,292);$Install.Size=New-Object Drawing.Size(164,44);$Install.Enabled=$false;$Install.DialogResult='OK';$Form.Controls.Add($Install)
 $Cancel=New-Object Windows.Forms.Button;$Cancel.Text='Cancel';$Cancel.Location=New-Object Drawing.Point(210,292);$Cancel.Size=New-Object Drawing.Size(108,44);$Cancel.DialogResult='Cancel';$Form.Controls.Add($Cancel)
 $KeyBox.Add_TextChanged({$Install.Enabled=($KeyBox.Text -match '^[a-fA-F0-9]{64}$') -and $Consent.Checked})
 $Consent.Add_CheckedChanged({$Install.Enabled=($KeyBox.Text -match '^[a-fA-F0-9]{64}$') -and $Consent.Checked})
@@ -61,9 +71,12 @@ try {
  if($DecryptExit -ne 0){throw 'Demo-key verification failed. Nothing was installed.'}
  New-Item -ItemType Directory -Force -Path $InstallDir | Out-Null
  Expand-Archive -LiteralPath $Archive -DestinationPath $InstallDir
- & (Join-Path $InstallDir 'Install-OYYO.ps1') -AllowLauncherException:$AllowLauncherException
+ if($Update){& (Join-Path $InstallDir 'Install-OYYO.ps1') -AllowLauncherException:$AllowLauncherException -DataDir $PreviousConfig.dataDir -ExistingConfig $ConfigPath}
+ else{& (Join-Path $InstallDir 'Install-OYYO.ps1') -AllowLauncherException:$AllowLauncherException}
  if(-not $?){throw 'OYYO was extracted but registration did not complete. Review the error above.'}
- Write-Host 'Installed. Opening OYYO...';$ProgressForm.Close();Start-Process -FilePath (Join-Path ([Environment]::GetFolderPath('Desktop')) 'OYYO.lnk')
+ $ProgressForm.Close()
+ if($Update){[Windows.Forms.MessageBox]::Show('The update is installed. OYYO will switch to it when no work is running. Your previous application files and data were retained. If Codex still uses the previous plugin, restart Codex.','OYYO update ready') | Out-Null;Start-Process -FilePath (Join-Path ([Environment]::GetFolderPath('Desktop')) 'OYYO.lnk')}
+ else{Start-Process -FilePath (Join-Path ([Environment]::GetFolderPath('Desktop')) 'OYYO.lnk')}
 }finally{
  if($ProgressForm){$ProgressForm.Dispose()}
  # Only remove this installer-created temporary directory, never the installation or user data.

@@ -1,9 +1,10 @@
 {
-  "version": "0.1.2",
+  "version": "0.1.3",
   "platform": "windows-x64",
   "format": "OYYOPKG1",
   "encryption": "AES-256-GCM",
-  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.2/oyyo-windows-demo-0.1.2.oyyo",
-  "sha256": "c2993da71092b9bff937f4bc589dfd69c103d6d9859e044c600e7f7cfc84ede7",
-  "sizeBytes": 51326823
+  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.3/oyyo-windows-demo-0.1.3.oyyo",
+  "sha256": "cadf6b1a14d2bc2e67dc2424a32725db70f349ec2b0b38eda4759e6d6ea2fc6f",
+  "sizeBytes": 51349868,
+  "notes": "Adds automatic update checks, an Update available banner and manual checks in Settings. Updates require approval and keep application versions separate from your existing models, chats and memory."
 }

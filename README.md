@@ -32,3 +32,11 @@ The demo key is 64 hexadecimal ASCII characters encoding 32 random bytes (256 bi
 Encryption protects the downloadable package from people without the key. **A valid key holder can inspect the decrypted installed code.** This is not DRM, tamper-proof licensing, or source protection against a licensed tester. This offline shared demo key has no expiry, per-user tracking or server-side revocation. Rotating the key protects future releases; it cannot revoke a previously downloaded package/key pair.
 
 This is an owner-authorized demo, not a fully validated enterprise release. Third-party components retain their own licenses and notices. Proprietary OYYO materials remain copyrighted; demo access does not transfer their ownership.
+
+## Updates in the installed app
+
+Starting with v0.1.3, OYYO checks this repository's `release.json` on launch and every six hours. Settings also has **Check for updates**. A newer version shows **Update available** in the web interface. The user reviews and approves installation; no silent replacement occurs. Repository commits without a new release version do not trigger an update.
+
+The update installer requests the demo key again, verifies and decrypts the package, installs application files alongside the previous version, preserves the existing data directory and hardware preferences, and switches the shortcuts/plugin registration. Active work blocks switching versions. Existing models, chats, memory and notes remain in their data directory. Restart Codex if its loaded plugin is still the old version. Keep the previous application folder until the update has been checked.
+
+Publisher workflow: upload a new encrypted versioned release first, then update `release.json` with its version, exact download URL, byte count, SHA-256 and optional `notes`. Only advance the version after the release is available. Key rotation requires giving testers the new key; existing keys are never uploaded to GitHub.
