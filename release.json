@@ -1,0 +1,9 @@
+{
+  "version": "0.1.1",
+  "platform": "windows-x64",
+  "format": "OYYOPKG1",
+  "encryption": "AES-256-GCM",
+  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.1/oyyo-windows-demo-0.1.1.oyyo",
+  "sha256": "8a5ccf29b049034227e48a347a3c6a21b3d12700670e486bccef0a8ff81584f1",
+  "sizeBytes": 51262207
+}
