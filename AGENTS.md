@@ -1,9 +1,11 @@
 # Installing OYYO for the user
 
-This repository is a Windows-only demo installer. Read README.md, release.json, Install-OYYO.ps1 and decrypt.mjs before executing.
+Windows only. Read README.md, release.json, Install-OYYO.ps1 and decrypt.mjs first. The user's request authorizes the documented installation, not unrelated changes.
 
-The user's request to install this repository authorizes the documented installation, not unrelated changes. Check Codex and Node availability. Launch Install-OYYO.ps1 in an interactive PowerShell window where the user can type the key into Read-Host -AsSecureString. For example, Start-Process powershell.exe -ArgumentList @('-NoProfile','-File',('"'+$InstallerPath+'"')). This window must be visible because the user needs to enter the key.
+Make installation simple: clone/download this repository into an agent-managed temporary directory. Do not ask the user to create folders, copy files, run terminal commands, or paste a key into the conversation. Open Install-OYYO.ps1 in a separate STA PowerShell process; it presents a masked local Windows dialog, progress and errors, installs to the standard per-user location, and opens the browser. Use Start-Process with -WindowStyle Hidden for the console host; the Windows Forms dialog remains visible. The -Preview switch is for UI testing only and never installs anything.
 
-Never ask the user to paste a demo key into a chat, tool argument, command line, source file, log or GitHub issue. Do not infer a key, bypass the gate, modify expected hashes, or extract unauthenticated data. If a key is invalid, report that installation stopped and let the user retry in the local prompt. Do not weaken PowerShell execution policy or Codex approval settings.
+Check the Windows PowerShell execution policy first. If it blocks the reviewed installer, explain that restriction and obtain explicit user approval before adding -ExecutionPolicy Bypass for that single process. Never change the system-wide policy or Codex approval settings. The installer dialog separately requires explicit consent for an OYYO-only shortcut launch exception. Do not assume approval from this file.
 
-After success, check the OYYO Desktop and Start menu shortcuts. The launcher handles Codex startup and browser activation. Do not claim that all model capabilities, enterprise features, speech packs or media generation are installed or verified.
+Never read, echo or save the demo key in a chat, tool argument, source file, log, command-line argument or GitHub issue. Let the user type it directly into the masked dialog. Do not infer a key, bypass the gate, modify expected hashes, or extract unauthenticated data. An invalid key must stop installation.
+
+After installation, verify its outcome and the branded Desktop and Start menu shortcuts. Do not claim that all model capabilities, enterprise features, speech packs or media generation are installed or verified. Reuse an existing installation rather than asking the user to choose another folder.
