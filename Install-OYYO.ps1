@@ -1,9 +1,7 @@
-param([string]$InstallDir=(Join-Path $env:LOCALAPPDATA 'OYYO\runtime'),[switch]$Preview,[switch]$Update,[string]$CurrentInstallDirectory)
+﻿param([string]$InstallDir=(Join-Path $env:LOCALAPPDATA 'OYYO\runtime'),[switch]$Preview,[switch]$Update,[string]$CurrentInstallDirectory)
 $ErrorActionPreference='Stop'
-Add-Type -AssemblyName System.Windows.Forms
-Add-Type -AssemblyName System.Drawing
-[Windows.Forms.Application]::EnableVisualStyles()
-trap { [Windows.Forms.MessageBox]::Show($_.Exception.Message,'OYYO installation',0,16) | Out-Null; break }
+if(-not $Update){Add-Type -AssemblyName System.Windows.Forms;Add-Type -AssemblyName System.Drawing;[Windows.Forms.Application]::EnableVisualStyles()}
+trap { $_.Exception.Message | Set-Content -LiteralPath (Join-Path $PSScriptRoot 'installer-error.log') -Encoding utf8; if(-not $Update){[Windows.Forms.MessageBox]::Show($_.Exception.Message,'OYYO installation',0,16) | Out-Null};exit 1 }
 
 $ProgressPreference='SilentlyContinue'
 if(-not [Environment]::Is64BitOperatingSystem){throw 'OYYO requires Windows x64.'}
@@ -26,6 +24,14 @@ $Existing=Join-Path $InstallDir 'Install-OYYO.ps1'
 if((Test-Path -LiteralPath $Existing) -and -not $Preview){Start-Process -FilePath (Join-Path ([Environment]::GetFolderPath('Desktop')) 'OYYO.lnk');return}
 $Url=[uri]$Manifest.url
 if($Url.Scheme -ne 'https' -or $Url.Host -ne 'github.com' -or -not $Url.AbsolutePath.StartsWith('/vpicciuolo/oyyo-runtime-runner/releases/download/')){throw 'Unexpected package source.'}
+if($Update){
+ $ActivationPath=Join-Path $PreviousConfig.dataDir 'activation.json'
+ if(-not(Test-Path -LiteralPath $ActivationPath)){throw 'This older installation has no saved activation. Repair activation once using the original installer.'}
+ $Activation=Get-Content -LiteralPath $ActivationPath -Raw | ConvertFrom-Json
+ $DemoKey=ConvertTo-SecureString -String $Activation.protectedKey
+ $AllowLauncherException=$Activation.allowLauncherException -eq $true
+ [IO.File]::WriteAllText((Join-Path $PSScriptRoot 'installer-ready.json'),('{"pid":'+$PID+'}'))
+}else{
 $Form=New-Object Windows.Forms.Form
 $Form.Text=if($Preview){'OYYO installer preview'}elseif($Update){'Update OYYO'}else{'Install OYYO'}
 $Form.ClientSize=New-Object Drawing.Size(520,365)
@@ -45,14 +51,21 @@ $Consent.Add_CheckedChanged({$Install.Enabled=($KeyBox.Text -match '^[a-fA-F0-9]
 $Install.ForeColor=[Drawing.Color]::Black;$Install.BackColor=[Drawing.Color]::FromArgb(182,240,215);$Install.UseVisualStyleBackColor=$false
 $Cancel.ForeColor=[Drawing.Color]::Black
 $Form.AcceptButton=$Install;$Form.CancelButton=$Cancel
+$Form.ShowInTaskbar=$true
+$Form.Add_Shown({$Form.TopMost=$true;$Form.Activate();$KeyBox.Focus();$Form.TopMost=$false;[IO.File]::WriteAllText((Join-Path $PSScriptRoot 'installer-ready.json'),('{"pid":'+$PID+'}'))})
 $Result=$Form.ShowDialog()
 if($Result -ne 'OK' -or $Preview){$KeyBox.Clear();$Form.Dispose();return}
 $DemoKey=ConvertTo-SecureString -String $KeyBox.Text -AsPlainText -Force
 $AllowLauncherException=$Consent.Checked;$KeyBox.Clear();$Form.Dispose()
+}
+$ProtectedKey=ConvertFrom-SecureString -SecureString $DemoKey
+$ProgressForm=$null
+if(-not $Update){
 $ProgressForm=New-Object Windows.Forms.Form;$ProgressForm.Text='Installing OYYO';$ProgressForm.ClientSize=New-Object Drawing.Size(440,120);$ProgressForm.StartPosition='CenterScreen';$ProgressForm.ControlBox=$false
 $Status=New-Object Windows.Forms.Label;$Status.Text='Downloading and checking your OYYO package...';$Status.Location=New-Object Drawing.Point(20,20);$Status.Size=New-Object Drawing.Size(400,35);$ProgressForm.Controls.Add($Status)
 $Bar=New-Object Windows.Forms.ProgressBar;$Bar.Location=New-Object Drawing.Point(20,65);$Bar.Size=New-Object Drawing.Size(400,22);$ProgressForm.Controls.Add($Bar)
 $ProgressForm.Show();[Windows.Forms.Application]::DoEvents()
+}
 $TempRoot=Join-Path ([IO.Path]::GetTempPath()) ('oyyo-install-'+[Guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $TempRoot | Out-Null
 try {
@@ -61,9 +74,9 @@ try {
  Write-Host 'Downloading the encrypted OYYO package...'
  $Curl=Join-Path $env:WINDIR 'System32\curl.exe'
  $Download=Start-Process -FilePath $Curl -ArgumentList @('--location','--fail','--retry','2','--connect-timeout','20','--output',('"'+$Encrypted+'"'),('"'+$Manifest.url+'"')) -PassThru -WindowStyle Hidden
- while(-not $Download.HasExited){if(Test-Path -LiteralPath $Encrypted){$Bar.Value=[Math]::Min(99,[int]((Get-Item -LiteralPath $Encrypted).Length*100/$Manifest.sizeBytes))};[Windows.Forms.Application]::DoEvents();Start-Sleep -Milliseconds 100}
+ while(-not $Download.HasExited){if($ProgressForm -and (Test-Path -LiteralPath $Encrypted)){$Bar.Value=[Math]::Min(99,[int]((Get-Item -LiteralPath $Encrypted).Length*100/$Manifest.sizeBytes))};if($ProgressForm){[Windows.Forms.Application]::DoEvents()};Start-Sleep -Milliseconds 100}
  $Download.WaitForExit();if($Download.ExitCode -ne 0){throw 'The download failed. Check your connection and reopen the installer.'}
- $Status.Text='Checking your key and installing OYYO...';$Bar.Value=100;[Windows.Forms.Application]::DoEvents()
+ if($ProgressForm){$Status.Text='Checking your key and installing OYYO...';$Bar.Value=100;[Windows.Forms.Application]::DoEvents()}
  if((Get-FileHash -LiteralPath $Encrypted -Algorithm SHA256).Hash.ToLower() -ne $Manifest.sha256){throw 'Package checksum mismatch. Installation stopped.'}
  $Pointer=[Runtime.InteropServices.Marshal]::SecureStringToBSTR($DemoKey)
  try{$env:OYYO_DEMO_KEY=[Runtime.InteropServices.Marshal]::PtrToStringBSTR($Pointer);& $NodeBin (Join-Path $PSScriptRoot 'decrypt.mjs') $Encrypted $Archive $Manifest.sha256;$DecryptExit=$LASTEXITCODE}
@@ -74,9 +87,11 @@ try {
  if($Update){& (Join-Path $InstallDir 'Install-OYYO.ps1') -AllowLauncherException:$AllowLauncherException -DataDir $PreviousConfig.dataDir -ExistingConfig $ConfigPath}
  else{& (Join-Path $InstallDir 'Install-OYYO.ps1') -AllowLauncherException:$AllowLauncherException}
  if(-not $?){throw 'OYYO was extracted but registration did not complete. Review the error above.'}
- $ProgressForm.Close()
- if($Update){[Windows.Forms.MessageBox]::Show('The update is installed. OYYO will switch to it when no work is running. Your previous application files and data were retained. If Codex still uses the previous plugin, restart Codex.','OYYO update ready') | Out-Null;Start-Process -FilePath (Join-Path ([Environment]::GetFolderPath('Desktop')) 'OYYO.lnk')}
- else{Start-Process -FilePath (Join-Path ([Environment]::GetFolderPath('Desktop')) 'OYYO.lnk')}
+ $InstalledConfig=Get-Content -LiteralPath (Join-Path $InstallDir 'plugins\oyyo\config.local.json') -Raw | ConvertFrom-Json
+ @{protectedKey=$ProtectedKey;allowLauncherException=$AllowLauncherException;version=1} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $InstalledConfig.dataDir 'activation.json') -Encoding utf8
+ if($ProgressForm){$ProgressForm.Close()}
+ [IO.File]::WriteAllText((Join-Path $PSScriptRoot 'installer-complete.json'),'{"installed":true}')
+ Start-Process -FilePath (Join-Path ([Environment]::GetFolderPath('Desktop')) 'OYYO.lnk')
 }finally{
  if($ProgressForm){$ProgressForm.Dispose()}
  # Only remove this installer-created temporary directory, never the installation or user data.

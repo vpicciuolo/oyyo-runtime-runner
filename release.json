@@ -1,10 +1,10 @@
 {
-  "version": "0.1.7",
+  "version": "0.1.8",
   "platform": "windows-x64",
   "format": "OYYOPKG1",
   "encryption": "AES-256-GCM",
-  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.7/oyyo-windows-demo-0.1.7.oyyo",
-  "sha256": "d3410a445e0f7bafbb88319a1963df181ba0b93161985049e71fbc5cf826e483",
-  "sizeBytes": 51354776,
-  "notes": "Adds persistent workspaces with nested chats and shared saved memory, new/clear chat controls, a compact collapsible sidebar, corrected logo sizing, Activity requests, Markdown export, request-based model routing and automatic preparation targeting three qualified compatible local models. Existing installation flow and demo key are unchanged."
+  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.8/oyyo-windows-demo-0.1.8.oyyo",
+  "sha256": "d32e22d3b63426a7304935546f229792fa6daad4cf4dbb49647456f1a03a42db",
+  "sizeBytes": 51355504,
+  "notes": "Fixes update activation: the demo key is required only on first installation and is protected by Windows for later updates. Adds headless update startup diagnostics, duplicate-launch protection, and safe replacement of the existing OYYO registration with rollback on failure. The installation link and demo key are unchanged."
 }
