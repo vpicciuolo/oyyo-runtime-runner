@@ -5,12 +5,15 @@ installer, decryptor and assets remain unchanged.
 
 ## Release state
 
-`release-macos-arm64.json` and `release-macos-x64.json` intentionally have the
-status `awaiting-production-encryption`. The installer refuses a manifest in
-that state. The release owner must review the plaintext artifact in the private
-repository, encrypt it outside this public repository with the existing OYYO
-demo key, upload only the encrypted `.oyyo` asset, then replace the manifest's
-status, SHA-256 and byte count with the exact published values.
+Each architecture-specific manifest is the authority for its current release
+state. The installer refuses `awaiting-production-encryption` placeholders and
+accepts only a `ready` manifest with the immutable release URL, exact SHA-256,
+positive byte count and declared `tar.gz` payload. The release owner must review
+the plaintext artifact in the private repository, encrypt it outside this
+public repository with the existing OYYO demo key, upload only the encrypted
+`.oyyo` asset, then set the matching manifest to `ready` with the exact
+published values. Keep the x64 manifest blocked until a native Intel artifact
+has been built and verified.
 
 Never commit a plaintext package, demo key, Keychain export, signing key or
 test credential to this repository.
