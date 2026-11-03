@@ -6,7 +6,7 @@ import test from 'node:test';
 
 const root = path.resolve(import.meta.dirname, '..');
 const expected = new Map([
-  ['release.json', { digest: 'd4abef12be400b7ca31b66a35fe0444face0a79c6824d649bad5dbcb8def044e', text: true }],
+  ['release.json', { digest: '9b754569582c5dac4106ecc58665b776c1c3441dfa2c013ae7793408ab51482b', text: true }],
   ['Install-OYYO.ps1', { digest: 'ca25abfef339359bbefe2204260f1c64b7867d9dd46d6009e01ea2bf981a19af', text: true }],
   ['decrypt.mjs', { digest: '366b3f56b8f0a32478104d40663dec12e8cd0465a364044803e09e324dc054cd', text: true }],
   ['oyyo.ico', { digest: '9b397582164bdf97d81881b143c0661621baf37e8fc9253f1140eeffbfc75dbb', text: false }],
@@ -24,7 +24,7 @@ test('Windows bootstrap stays unchanged alongside the verified Windows testing f
   }
   const release = JSON.parse(fs.readFileSync(path.join(root, 'release.json'), 'utf8'));
   assert.equal(release.platform, 'windows-x64');
-  assert.equal(release.version, '0.1.15');
+  assert.equal(release.version, '0.1.16');
 });
 
 test('public Mac manifests expose only verified immutable releases', () => {
