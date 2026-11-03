@@ -1,10 +1,10 @@
 {
-  "version": "0.1.12",
+  "version": "0.1.13",
   "platform": "windows-x64",
   "format": "OYYOPKG1",
   "encryption": "AES-256-GCM",
-  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.12/oyyo-windows-demo-0.1.12.oyyo",
-  "sha256": "902511cbac60a76a330eb79924748b716cc267fd3e9b0fb04e88c6049f8d25f3",
-  "sizeBytes": 51385480,
-  "notes": "Windows testing build: answer-first streaming chat, readable detailed output, expandable specialist contributions, contextual next-action drafts, 200 model-independent agent roles and a guided library of 224 versioned templates. Conversation context now carries across team follow-ups. Faster dashboard startup with unchanged inference integrity checks. Branded PDF, Word and PowerPoint exports. Social publishing and local diffusion/video inference are not activated by this update. The existing installation method and demo key are unchanged; updates reuse saved activation. Existing chats, models and shared memory are preserved. Windows only; the Mac feed remains unchanged."
+  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.13/oyyo-windows-demo-0.1.13.oyyo",
+  "sha256": "1c7815f21ea8cebfb04286af4b51e96f8b437b8138692a93d063911df66fea3e",
+  "sizeBytes": 51647619,
+  "notes": "Windows testing build: consistent outline icons; a sliding, pinnable sidebar; a redesigned NotzUp library with short local audio recording/import, playback, editable transcripts, summaries, action items, translation and branded exports; optional pinned local speech setup with integrity verification and an English meeting test. Save reusable profiles, specialist teams, custom templates and per-agent instructions/model/answer/sampling settings. Use @ in chat to combine agents, teams, profiles, templates, notes, memory and qualified models. Run settings are snapshotted and model quality gates remain enforced. Speech clips are limited to 1 minute 55 seconds; automatic speaker identification and full NotzUp account/mobile feature parity are not included. Connected processing is labeled. The existing installation method and demo key are unchanged, and updates reuse activation. Windows only; Mac feeds are unchanged."
 }
