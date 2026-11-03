@@ -1,10 +1,10 @@
 {
-  "version": "0.1.13",
+  "version": "0.1.14",
   "platform": "windows-x64",
   "format": "OYYOPKG1",
   "encryption": "AES-256-GCM",
-  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.13/oyyo-windows-demo-0.1.13.oyyo",
-  "sha256": "1c7815f21ea8cebfb04286af4b51e96f8b437b8138692a93d063911df66fea3e",
-  "sizeBytes": 51647619,
-  "notes": "Windows testing build: consistent outline icons; a sliding, pinnable sidebar; a redesigned NotzUp library with short local audio recording/import, playback, editable transcripts, summaries, action items, translation and branded exports; optional pinned local speech setup with integrity verification and an English meeting test. Save reusable profiles, specialist teams, custom templates and per-agent instructions/model/answer/sampling settings. Use @ in chat to combine agents, teams, profiles, templates, notes, memory and qualified models. Run settings are snapshotted and model quality gates remain enforced. Speech clips are limited to 1 minute 55 seconds; automatic speaker identification and full NotzUp account/mobile feature parity are not included. Connected processing is labeled. The existing installation method and demo key are unchanged, and updates reuse activation. Windows only; Mac feeds are unchanged."
+  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.14/oyyo-windows-demo-0.1.14.oyyo",
+  "sha256": "fa83a24a8cb45cc63fc5474146ce0fec53bed1a8a7598fe9282da8f731e27e62",
+  "sizeBytes": 51652568,
+  "notes": "Windows beta update: fixed primary navigation for Chat, Activity and Task library; optional tools in a floating More panel with pins; paginated chat and workspace history instead of nested sidebar scrolling. NotzUp meeting and note jobs use qualified local models even when connected assistance is enabled, and note-linked conversations retain that local-only policy. Added the desktop-compatible S1–S4 device performance profile for the same Tiny-ALL speech pack and a project blueprint template in OYYO. Speech capture remains limited to 1 minute 55 seconds. Existing installation method, demo key and activation reuse are unchanged. Windows only; Mac feeds are unchanged."
 }
