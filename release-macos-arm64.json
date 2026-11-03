@@ -10,5 +10,5 @@
   "payloadArchive": "tar.gz",
   "minimumMacOS": "14.0",
   "baseVersion": "0.1.10",
-  "notes": "Native macOS build of OYYO 0.1.10. Same demo key; first installation only. Updates reuse local Keychain activation."
+  "notes": "OYYO 0.1.10"
 }

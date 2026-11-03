@@ -6,5 +6,5 @@
   "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.14/oyyo-windows-demo-0.1.14.oyyo",
   "sha256": "fa83a24a8cb45cc63fc5474146ce0fec53bed1a8a7598fe9282da8f731e27e62",
   "sizeBytes": 51652568,
-  "notes": "Windows beta update: fixed primary navigation for Chat, Activity and Task library; optional tools in a floating More panel with pins; paginated chat and workspace history instead of nested sidebar scrolling. NotzUp meeting and note jobs use qualified local models even when connected assistance is enabled, and note-linked conversations retain that local-only policy. Added the desktop-compatible S1–S4 device performance profile for the same Tiny-ALL speech pack and a project blueprint template in OYYO. Speech capture remains limited to 1 minute 55 seconds. Existing installation method, demo key and activation reuse are unchanged. Windows only; Mac feeds are unchanged."
+  "notes": "OYYO 0.1.14"
 }

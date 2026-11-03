@@ -8,5 +8,5 @@
   "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.10/oyyo-macos-x64-demo-0.1.10.oyyo",
   "sha256": null,
   "sizeBytes": 0,
-  "notes": "Placeholder only. Do not mark this Intel manifest ready until a real x64 artifact exists and its exact encrypted SHA-256 and byte count have been verified."
+  "notes": "OYYO 0.1.10"
 }

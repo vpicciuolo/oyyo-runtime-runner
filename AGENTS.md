@@ -37,3 +37,7 @@ Do not unlock or reconfigure Keychain, bypass Gatekeeper, install Rosetta,
 accept licenses, or weaken macOS security settings. Preserve the shared data
 directory and prior version roots. Treat Intel artifacts as unverified until
 they have run on actual Intel hardware or trusted Intel CI.
+
+## Public release presentation
+
+Use version-only release titles (OYYO X.Y.Z), empty GitHub release bodies, and version-only manifest notes. Do not publish changelogs or feature descriptions. Preserve package URLs, hashes, sizes, availability status, installation flow and activation requirements.
