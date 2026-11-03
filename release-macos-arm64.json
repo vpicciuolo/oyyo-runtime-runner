@@ -1,14 +1,14 @@
 {
-  "version": "0.1.10",
+  "version": "0.1.16",
   "platform": "macos-arm64",
   "format": "OYYOPKG1",
   "encryption": "AES-256-GCM",
-  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.10/oyyo-macos-arm64-demo-0.1.10.oyyo",
-  "sha256": "7ac7587c74ef4808d80661266bc9e0a47084d63eda57af44b939d6b89028ed7d",
-  "sizeBytes": 216548907,
+  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.16/oyyo-macos-arm64-demo-0.1.16.oyyo",
+  "sha256": "dbffb03553d06cd972aa28723a79fcd878d44b714f2ba792ca3bd623727df420",
+  "sizeBytes": 211962495,
   "status": "ready",
   "payloadArchive": "tar.gz",
   "minimumMacOS": "14.0",
-  "baseVersion": "0.1.10",
-  "notes": "OYYO 0.1.10"
+  "baseVersion": "0.1.16",
+  "notes": "OYYO 0.1.16"
 }

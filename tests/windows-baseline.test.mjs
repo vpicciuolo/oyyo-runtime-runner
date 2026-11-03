@@ -29,12 +29,12 @@ test('Windows bootstrap stays unchanged alongside the verified Windows testing f
 
 test('public Mac manifests expose only verified immutable releases', () => {
   const arm64 = JSON.parse(fs.readFileSync(path.join(root, 'release-macos-arm64.json'), 'utf8'));
-  assert.equal(arm64.version, '0.1.10');
+  assert.equal(arm64.version, '0.1.16');
   assert.equal(arm64.platform, 'macos-arm64');
   assert.equal(arm64.format, 'OYYOPKG1');
   assert.equal(arm64.encryption, 'AES-256-GCM');
   assert.equal(arm64.payloadArchive, 'tar.gz');
-  assert.equal(arm64.url, 'https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.10/oyyo-macos-arm64-demo-0.1.10.oyyo');
+  assert.equal(arm64.url, 'https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.16/oyyo-macos-arm64-demo-0.1.16.oyyo');
   if (arm64.status === 'ready') {
     assert.match(arm64.sha256, /^[a-f0-9]{64}$/);
     assert.notEqual(arm64.sha256, '0'.repeat(64));
