@@ -111,9 +111,18 @@ else
   arch='x64'
 fi
 
-# A public placeholder manifest must fail before any package or key is used.
+# Use an isolated non-ready fixture: public feeds may already be ready.
+# Never let this unattended rejection test reach the production key dialog.
+typeset non_ready_manifest="$root/release-non-ready.json"
+"$NODE_BIN" --input-type=module -e '
+  import fs from "node:fs";
+  const [source, destination] = process.argv.slice(1);
+  const value = JSON.parse(fs.readFileSync(source, "utf8"));
+  Object.assign(value, { status: "awaiting-production-encryption", sha256: null, sizeBytes: 0 });
+  fs.writeFileSync(destination, JSON.stringify(value));
+' "$REPO_ROOT/release-macos-$arch.json" "$non_ready_manifest"
 if OYYO_INSTALLER_TEST=1 /bin/zsh "$REPO_ROOT/Install-OYYO.command" \
-  --test-manifest "$REPO_ROOT/release-macos-$arch.json" \
+  --test-manifest "$non_ready_manifest" \
   --test-support-root "$support" \
   --test-applications-dir "$applications" \
   --test-desktop-dir "$desktop" \
