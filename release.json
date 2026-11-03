@@ -1,10 +1,10 @@
 {
-  "version": "0.1.14",
+  "version": "0.1.15",
   "platform": "windows-x64",
   "format": "OYYOPKG1",
   "encryption": "AES-256-GCM",
-  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.14/oyyo-windows-demo-0.1.14.oyyo",
-  "sha256": "fa83a24a8cb45cc63fc5474146ce0fec53bed1a8a7598fe9282da8f731e27e62",
-  "sizeBytes": 51652568,
-  "notes": "OYYO 0.1.14"
+  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.15/oyyo-windows-demo-0.1.15.oyyo",
+  "sha256": "29bd9b7fa8917036d4522296169739a699dcac44d915fb4cbaeddc2a1f14aa08",
+  "sizeBytes": 51701251,
+  "notes": "OYYO 0.1.15"
 }
