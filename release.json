@@ -1,10 +1,10 @@
 {
-  "version": "0.1.10",
+  "version": "0.1.11",
   "platform": "windows-x64",
   "format": "OYYOPKG1",
   "encryption": "AES-256-GCM",
-  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.10/oyyo-windows-demo-0.1.10.oyyo",
-  "sha256": "2049a53846898dce2af62d92224554d986cd33a923b0302b5fc6cffd6ddd28b5",
-  "sizeBytes": 51356118,
-  "notes": "Adds an Advanced setting for the Codex sessions menu, disabled by default. Corrects the Windows PowerShell update environment and process launch. Includes saved activation for updates without key entry, startup and registration fixes, and the INTERNAL BETA ACTIVATED label. The demo key and GitHub installation link are unchanged."
+  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.11/oyyo-windows-demo-0.1.11.oyyo",
+  "sha256": "c12c0974e8e4e66def008e5c2186af874cc8e4188f31f777a5da7a82dc53d708",
+  "sizeBytes": 51369857,
+  "notes": "Windows testing build: model-independent agent teams, a searchable directory of 32 specialized roles, live assignment/review flows, model-adapted prompts and branded PDF/Word/PowerPoint exports. Simple replies remain direct. The installation link and demo key are unchanged; updates reuse saved activation. Existing models, chats and shared memory are preserved. This release updates Windows only."
 }
