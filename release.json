@@ -1,10 +1,10 @@
 {
-  "version": "0.1.11",
+  "version": "0.1.12",
   "platform": "windows-x64",
   "format": "OYYOPKG1",
   "encryption": "AES-256-GCM",
-  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.11/oyyo-windows-demo-0.1.11.oyyo",
-  "sha256": "c12c0974e8e4e66def008e5c2186af874cc8e4188f31f777a5da7a82dc53d708",
-  "sizeBytes": 51369857,
-  "notes": "Windows testing build: model-independent agent teams, a searchable directory of 32 specialized roles, live assignment/review flows, model-adapted prompts and branded PDF/Word/PowerPoint exports. Simple replies remain direct. The installation link and demo key are unchanged; updates reuse saved activation. Existing models, chats and shared memory are preserved. This release updates Windows only."
+  "url": "https://github.com/vpicciuolo/oyyo-runtime-runner/releases/download/v0.1.12/oyyo-windows-demo-0.1.12.oyyo",
+  "sha256": "902511cbac60a76a330eb79924748b716cc267fd3e9b0fb04e88c6049f8d25f3",
+  "sizeBytes": 51385480,
+  "notes": "Windows testing build: answer-first streaming chat, readable detailed output, expandable specialist contributions, contextual next-action drafts, 200 model-independent agent roles and a guided library of 224 versioned templates. Conversation context now carries across team follow-ups. Faster dashboard startup with unchanged inference integrity checks. Branded PDF, Word and PowerPoint exports. Social publishing and local diffusion/video inference are not activated by this update. The existing installation method and demo key are unchanged; updates reuse saved activation. Existing chats, models and shared memory are preserved. Windows only; the Mac feed remains unchanged."
 }
